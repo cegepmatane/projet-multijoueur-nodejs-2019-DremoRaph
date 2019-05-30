@@ -19,6 +19,21 @@ MODELE.Joueur1 = function(vie, attaque, vitesse){
         
     })();
 
+    joueur1.blesser = function(degats)
+    {
+        this.vie -= degats;
+    }
+
+    joueur1.verifierMort = function()
+    {
+        if (this.vie <= 0)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     
 
     

@@ -1,7 +1,9 @@
 var Fond = function(nouveauCanevas){
 
     var canevas;
-    var couleur;
+    var couleur1;
+    var couleur2;
+    var bouton1;
     var affichageHaut;
     var affichageBas;
     var colone1;
@@ -11,8 +13,10 @@ var Fond = function(nouveauCanevas){
     var ligne3;
     var bord;
     var indicateurJoueur;
+    var indicateurTour;
     var separation;
     var encadreBouton1;
+    
     function initialiser(){
 
         canevas = nouveauCanevas;
@@ -50,10 +54,14 @@ var Fond = function(nouveauCanevas){
         afficherToolTips();
 
     }
+    
+    this.getBouton1 = function(){
+        return bouton1;
+    } 
 
     function dessinerBoutons()
     {
-        var bouton1 = document.getElementById("bouton-attaque");
+        bouton1 = document.getElementById("bouton-attaque");
         bouton1.style.display = "inline-block";
         bouton1.style.position = "absolute";
         bouton1.style.width = (affichageBas.width() * 0.25) + "px";
@@ -95,6 +103,12 @@ var Fond = function(nouveauCanevas){
           
           
           });
+        
+        indicateurTour = document.getElementById("log-tour");
+        indicateurTour.style.display = "inline-block";
+        indicateurTour.style.position = "absolute";
+        indicateurTour.style.left = affichageBas.x() + affichageBas.width() * 0.05 + "px";
+        indicateurTour.style.top = affichageBas.y() + affichageBas.height() * 0.05 + "px"; 
     }
 
     function hoverEffect(evenement)

@@ -26,6 +26,20 @@ MODELE.Ennemi = function(){
         this.vitesse = retourStats.vitesse;
         this.stats = retourStats;
     }
+    ennemi.blesser = function(degats)
+    {
+        this.vie -= degats;
+    }
+
+    ennemi.verifierMort = function()
+    {
+        if (this.vie <= 0)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     
 

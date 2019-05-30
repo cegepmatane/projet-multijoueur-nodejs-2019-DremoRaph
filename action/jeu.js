@@ -16,6 +16,11 @@
     var autreJoueur;
     var ennemi;
     var derniereValeurTemporelleMilliseconde;
+    var actionTour;
+    var boutonAttaque;
+    var action1;
+    var action2;
+    var actionPrise;
     (function initialiser()
     {
         multiNode = new MultiNode();
@@ -28,7 +33,10 @@
         vueCombat = VUE.combat;
         vueAccueil = VUE.Accueil;
         vueAccueil.afficher();
-        
+        actionTour = 0;
+        action1 = "";
+        action2 = "";
+        actionPrise = false;
         //projectile = new MODELE.Balle(0, 0, ballePositionCentreX, ballePositionCentreY);
         //document.addEventListener("DOMContentLoaded", preparerJeu);
         
@@ -202,8 +210,27 @@
                 console.log(variable.valeur);
                 //ennemi = new MODELE.Ennemi();
                 ennemi.setStats(variable.valeur);
-                vueCombat.rafraichirStats(joueur,autreJoueur,ennemi);
+                if(positionJoueur == 1){
+                    vueCombat.rafraichirStats(joueur,autreJoueur,ennemi);
+                } else {
+                    vueCombat.rafraichirStats(autreJoueur,joueur,ennemi);
+                };
             break;
+
+            case "attaque":
+                console.log(variable.valeur);
+                
+                actionTour++;
+                if(actionTour == 3){
+                actionTour = 0;
+                effectuerTour(variable.valeur);
+                
+                }else{
+                    stockerTour(variable.valeur);
+                }
+                
+                
+
             
 
         }
@@ -211,6 +238,71 @@
 
     }
 
+    function effectuerTour(attaqueEnnemi)
+    {
+        var action1Separe = action1.split("/");
+        var action2Separe = action2.split("/");
+        vueCombat.remplirLog(action1Separe[1] + " attaque l'ennemi pour " + action1Separe[0] + " points de degats!");
+        ennemi.blesser(action1Separe[0]);
+        vueCombat.remplirLog(action2Separe[1] + " attaque l'ennemi pour " + action2Separe[0] + " points de degats!");
+        ennemi.blesser(action2Separe[0]);
+        var tourEnnemi = attaqueEnnemi.split("/");
+        var choixEnnemi = tourEnnemi[1];
+        var degatsEnnemi = tourEnnemi[0];
+        if(choixEnnemi == 1){
+            if(positionJoueur == 1)
+            {
+                vueCombat.remplirLog("L'ennemi attaque " + pseudonymeJoueur + " pour " + degatsEnnemi + " points de degats!");
+                joueur.blesser(degatsEnnemi);
+            }else{
+                vueCombat.remplirLog("L'ennemi attaque " + pseudonymeAutreJoueur + " pour " + degatsEnnemi + " points de degats!");
+                autreJoueur.blesser(degatsEnnemi);
+            }
+            
+        } else {
+            if(positionJoueur == 1)
+            {
+                
+                vueCombat.remplirLog("L'ennemi attaque " + pseudonymeAutreJoueur + " pour " + degatsEnnemi + " points de degats!");
+                autreJoueur.blesser(degatsEnnemi);
+            }else{
+                vueCombat.remplirLog("L'ennemi attaque " + pseudonymeJoueur + " pour " + degatsEnnemi + " points de degats!");
+                joueur.blesser(degatsEnnemi);
+            }
+        }
+        if(positionJoueur == 1){
+            vueCombat.rafraichirStats(joueur,autreJoueur,ennemi);
+        } else {
+            vueCombat.rafraichirStats(autreJoueur,joueur,ennemi);
+        }
+        action1 = "";
+        action2 = "";
+        actionPrise = false;
+        verifierFinPartie();
+        
+    }
+
+    function verifierFinPartie()
+    {
+
+    if(ennemi.verifierMort())
+    {
+        window.location.hash = "#fin-partie-gagnee";
+    }else if(joueur.verifierMort() || autreJoueur.verifierMort())
+        {
+            window.location.hash = "#fin-partie-perdue";
+        }
+
+    }
+    function stockerTour(tour)
+    {
+        if(actionTour == 1){
+            action1 = tour;
+        } else if(actionTour == 2){
+            action2 = tour;
+            
+        }
+    }
     function naviguer(evenement)
     {
         
@@ -247,7 +339,26 @@
         } else {
             vueCombat.afficher(positionJoueur, autreJoueur, joueur, ennemi);
         }
+        boutonAttaque = document.getElementById("bouton-attaque");
+        boutonAttaque.addEventListener("click", actionAttaque);
         
+        
+    }
+
+    function actionAttaque()
+    {
+        if(actionPrise == false)
+        {
+            var degatsCalculés = Math.floor((Math.random() * vueCombat.getAttaque(positionJoueur)) + 10);
+            multiNode.posterVariableTextuelle("attaque", degatsCalculés +"/"+ pseudonymeJoueur);
+            if(actionTour == 1)
+            {
+                multiNode.posterVariableTextuelle("attaque", Math.floor((Math.random() * vueCombat.getAttaque(3)) + 0) + "/" + Math.floor((Math.random() * 2) + 1));
+            }
+            actionPrise = true;
+        } else {
+            vueCombat.remplirLog("Veuillez attendre le tour de l'autre joueur!!!")
+        }
         
     }
     function naviguerVueFinPartie(gagnee)
@@ -255,7 +366,7 @@
         vueFinPartie = VUE.FinPartie;
         vueFinPartie.afficher(gagnee);
     }
-
+    /*
     function preparerJeu()
     {
         preparerRafraichissementEcran();
@@ -267,7 +378,7 @@
         
         
         
-    }
+    } */
 
     
 

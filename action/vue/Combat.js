@@ -46,6 +46,18 @@ VUE.combat = (function()
         Joueur2.afficher();
         Ennemi.afficher();
     }
+
+    interface.getAttaque = function(position)
+    {
+        if(position == 1){
+            return canevas.attr("joueur1Attaque");
+        } else if(position == 2){
+            return canevas.attr("joueur2Attaque");
+        }else{
+            return canevas.attr("ennemiAttaque");
+        }
+        
+    }
     
     interface.dessinerCarre = function(hauteur,largeur)
     {
@@ -65,6 +77,12 @@ VUE.combat = (function()
         canevas.attr({'ennemiVie': ennemi.vie, 
         'ennemiAttaque' : ennemi.attaque, 
         'ennemiVitesse': ennemi.vitesse});
+    }
+
+    interface.remplirLog = function(message)
+    {
+        var log = document.getElementById("log-tour");
+        log.value = log.value + "\n" + message;
     }
 
     
