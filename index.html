@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="lib/svg.min.js"></script>
+        <script src="lib/MultiNode.js"></script>
+        <style>
+            
+            body{
+                margin: 0px;
+                padding: 0px;
+                background-color: rgb(15, 3, 25);
+            }
+
+            #scene-jeu{
+                position: relative;
+                top: 0px;
+                left: 0px;
+            }
+            
+            .bouton{
+                display: none; 
+                color: white;
+                border-style: groove;
+                border-width: 5px; 
+                text-align: center;
+                transition-duration : 1s;
+                font-size: 2.55vh;
+
+            }
+
+            
+            #champ-joke{
+                top: 30px;
+                align-items: center;
+                font-weight: bolder;
+                font-family: 'Courrier', cursive;
+                text-shadow: 2px 2px 4px #000000;
+                animation: rainbow 5s infinite; 
+  
+  
+
+            }
+            #champ-punchline{
+                top: 10px;
+                width:fit-content;
+                align-self: center;
+                border: 4px double black;
+                border-radius: 5px;
+                font-weight: bolder;
+                font-family: 'Courrier', cursive;
+                transition-duration : 1s;
+                color: transparent;
+                animation: rainbowDiv 5s infinite; 
+  
+  
+
+            }
+            #champ-punchline:hover {
+                top: 10px;
+                font-weight: bolder;
+                font-family: 'Courrier', cursive;
+                color:white;
+                
+  
+  
+
+            }
+            #encadre-authentification{
+                width: 500px; 
+                color: white; 
+                text-decoration: underline; 
+                border: 4px groove;
+                border-radius: 5px;
+                background-color: rgb(54, 22, 81);
+            }
+            @keyframes rainbow{
+            0%{color: orange;}	
+            10%{color: purple;}	
+            20%{color: red;}
+            30%{color: CadetBlue;}
+            40%{color: yellow;}
+            50%{color: coral;}
+            60%{color: green;}
+            70%{color: cyan;}
+            80%{color: DeepPink;}
+            90%{color: DodgerBlue;}
+            100%{color: orange;}
+            }
+            
+            @keyframes rainbowDiv{
+            0%{background-color: orange;}	
+            10%{background-color: purple;}	
+            20%{background-color: red;}
+            30%{background-color: CadetBlue;}
+            40%{background-color: yellow;}
+            50%{background-color: coral;}
+            60%{background-color: green;}
+            70%{background-color: cyan;}
+            80%{background-color: DeepPink;}
+            90%{background-color: DodgerBlue;}
+            100%{background-color: orange;}
+            }
+
+        
+        </style>
+        
+    </head>
+    <body>
+        <script type="plain/text" id="page-accueil">           
+        <div>
+            <h1 style="text-align : center; color: white">Tour par tour épique!</h1>
+            
+                <form id="formulaire-authentification">
+                    <fieldset id="encadre-authentification">
+                        Pseudonyme:<br>
+                        <input type="text" id="pseudonyme"><br>
+                        <input type="submit" value="Jouer!!" id="bouton-authentification">
+                    </fieldset>
+                </form> 
+            
+            
+        </div>
+        <div>
+            <p id="champ-joke"></p>
+            <p id="champ-punchline"></p>
+        </div>
+            
+        </script>
+
+        <script type="plain/text" id="page-partie">
+            <div id="scene-jeu"></div>
+            <div id="bouton-attaque" class ="bouton">
+                Attaque!
+            </div>
+            <div id="bouton-magie" class ="bouton">
+                Lancer un sort!
+            </div>
+            <div id="bouton-defense" class ="bouton">
+                Defendre!
+            </div>
+        </script>
+       
+        <script type="plain/text" id="page-fin-partie">
+            <div>
+                <h1>{texte-fin}</h1>
+                
+                <a href="#">Recommencer?</a>
+                
+            </div>
+        </script>
+
+        <script src="action/element/Fond.js"></script>
+        <script src="action/element/Joueur1.js"></script>
+        <script src="action/element/Joueur2.js"></script>
+        <script src="action/element/Ennemi.js"></script>
+        <script src="action/modele/Joueur1.js"></script>
+        <script src="action/modele/Joueur2.js"></script>
+        <script src="action/modele/Ennemi.js"></script>
+        <script src="action/vue/Accueil.js"></script>
+        <script src="action/vue/Combat.js"></script>
+        <script src="action/vue/FinPartie.js"></script>
+        <script src="action/jeu.js"></script>
+
+        
+    </body>
+</html>
