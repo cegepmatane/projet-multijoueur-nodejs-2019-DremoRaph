@@ -56,6 +56,7 @@
         boutonAuthentification = document.getElementById("bouton-authentification");
         pseudonyme = document.getElementById("pseudonyme");
         chargerJoke();
+        chargerConseil();
         
 
 
@@ -75,6 +76,25 @@
                     //console.log(objet.setup);
                     champ.innerHTML = objet.setup;
                     punchline.innerHTML = objet.punchline;
+			  }
+		};
+		requete.send(null);  
+    }
+    
+    function chargerConseil() 
+	{
+        var requete = new XMLHttpRequest();
+        var conseil = document.getElementById("champ-conseil");
+        conseil.innerHTML = "Conseil:";
+        var contenu = document.getElementById("champ-contenu-conseil");
+		requete.overrideMimeType("application/json");
+		requete.open('GET', 'http://localhost/service-conseil.php', true); 
+		requete.onreadystatechange = function () {
+			  if (requete.readyState == 4 && requete.status == "200") {
+                    var objet = JSON.parse(requete.responseText);
+                    //console.log(objet.setup);
+                    contenu.innerHTML = objet.conseil;
+                    
 			  }
 		};
 		requete.send(null);  
